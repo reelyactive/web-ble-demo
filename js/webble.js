@@ -14,7 +14,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           }]
         })
         .then(device => { $scope.device = JSON.stringify(device, null, ' '); })
-        .catch(error => { $scope.device = { error: error }; });
+        .catch(error => { $scope.device = { error: error.toString() }; });
       }
       catch(err) {
         $scope.device = { err: err.toString() };
