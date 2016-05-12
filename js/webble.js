@@ -13,7 +13,8 @@ angular.module('webble', [ 'ui.bootstrap' ])
             name: 'reelyActive'
           }]
         })
-        .then(device => { $scope.device = JSON.stringify(device, null, ' '); })
+        .then(device => { $scope.device = JSON.stringify(device, null, ' ');
+                          return device.gatt.connect(); })
         .catch(error => { $scope.device = { error: error.toString() }; });
       }
       catch(err) {
