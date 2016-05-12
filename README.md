@@ -10,7 +10,7 @@ Browse to [chrome://flags/#enable-web-bluetooth](chrome://flags/#enable-web-blue
 Step 2: Load the web demo over HTTPS
 ------------------------------------
 
-[Live demo](https://reelyactive.github.io/web-ble-demo/) will scan for BLE devices named reelyActive.
+[Click here](https://reelyactive.github.io/web-ble-demo/) to load the page and then press the Scan button.
 
 
 More info
