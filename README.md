@@ -1,13 +1,22 @@
 web-ble-demo
 ============
 
-[Live demo](http://reelyactive.github.io/web-ble-demo/) of a web application that scans for BLE devices named reelyActive.  Works in select versions of Chrome, but only when hosted over https.  See [Interact with BLE devices on the web](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web) for details.
-
-
-Enable Web Bluetooth in Chrome
-------------------------------
+Step 1: Enable Web Bluetooth in Chrome
+--------------------------------------
 
 Browse to [chrome://flags/#enable-web-bluetooth](chrome://flags/#enable-web-bluetooth) and select Enable, if permitted.
+
+
+Step 2: Load the web demo over HTTPS
+------------------------------------
+
+[Live demo](https://reelyactive.github.io/web-ble-demo/) will scan for BLE devices named reelyActive.
+
+
+More info
+---------
+
+See [Interact with BLE devices on the web](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web) for details.
 
 
 License
