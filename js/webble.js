@@ -5,7 +5,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
     $scope.device = JSON.stringify({}, null, ' ');
     $scope.scanCount = 0;
 
-    function scan() {
+    $scope.scan = function() {
       $scope.scanCount++;
       try {
         navigator.bluetooth.requestDevice({
@@ -21,6 +21,4 @@ angular.module('webble', [ 'ui.bootstrap' ])
       }
     }
 
-    scan();
-    $interval(scan, 4000);
   });
