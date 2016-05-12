@@ -3,22 +3,25 @@ angular.module('webble', [ 'ui.bootstrap' ])
   // Interaction controller
   .controller('InteractionCtrl', function($scope, $interval) {
     $scope.device = JSON.stringify({}, null, ' ');
-    $scope.scanCount = 0;
+    $scope.compatibilityError = 'None';
+    $scope.scanError = 'None';
 
     $scope.scan = function() {
-      $scope.scanCount++;
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
             name: 'reelyActive'
           }]
         })
-        .then(device => { $scope.device = JSON.stringify(device, null, ' ');
-                          return device.gatt.connect(); })
-        .catch(error => { $scope.device = { error: error.toString() }; });
+        .then(device => {
+          $scope.device.name = device.name;
+          $scope.device.uuids = device.uuids;
+          return device.gatt.connect();
+        })
+        .catch(error => { $scope.scanError = error.toString(); });
       }
       catch(err) {
-        $scope.device = { err: err.toString() };
+        $scope.compatibilityError = err.toString();
       }
     }
 

@@ -33,9 +33,15 @@
       </nav>
       <div class="container-fluid">
         <h1> reelyActive Web Bluetooth Demo </h1>
+        <p><b>Step 1:</b> Run in Chrome</p>
+        <p><b>Step 2:</b> Enable Web Bluetooth via <a href="chrome://flags/#enable-web-bluetooth" target="_blank">chrome://flags/#enable-web-bluetooth</a></p>
+        <p><b>Step 3:</b> Click scan</p>
         <pre>{{ device }}</pre>
         <button class="btn btn-success" ng-click="scan()">Scan</button>
-        <p>Scanned {{scanCount}} times</p>
+        <h3> Compatibility error </h3>
+        <pre>{{ compatibilityError }}</pre>
+        <h3> Scan error </h3>
+        <pre>{{ scanError }}</pre>
       </div>
       <footer class="footer">
         <a href="https://github.com/reelyactive/web-ble-demo"> web-ble-demo </a>
