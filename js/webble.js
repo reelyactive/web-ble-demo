@@ -10,8 +10,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
-            services: [0xfed8]
-            //name: 'reelyActive'
+            name: 'reelyActive'
           }]
         })
         .then(device => { $scope.device = JSON.stringify(device, null, ' '); })
@@ -22,5 +21,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
       }
     }
 
+    scan();
     $interval(scan, 4000);
   });
