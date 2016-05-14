@@ -17,7 +17,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           }]
         })
         .then(device => {
-          $scope.result = device;
+          $scope.result.device = device;
           return device.gatt.connect();
         })
         .then(server => {
