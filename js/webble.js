@@ -12,7 +12,8 @@ angular.module('webble', [ 'ui.bootstrap' ])
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
-            name: $scope.nameFilter
+            name: $scope.nameFilter,
+            optionalServices: [ 'battery_service' ]
           }]
         })
         .then(device => {
