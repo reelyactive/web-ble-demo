@@ -13,7 +13,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           filters: [{
             //name: 'reelyActive'
             //services: ['battery_service', 'heart_rate', 0xfed8, 0xfeed, 0xcbbfe0e1f7f3420684e084cbb3d09dfc]
-            services: [0xcbbfe0e1f7f3420684e084cbb3d09dfc]
+            services: ['battery_service']
           }]
         })
         .then(device => {
