@@ -2,13 +2,14 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
   // Interaction controller
   .controller('InteractionCtrl', function($scope, $interval) {
-    $scope.device = JSON.stringify({}, null, ' ');
+    $scope.result = JSON.stringify({}, null, ' ');
     $scope.compatibilityError = 'None';
     $scope.scanError = 'None';
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
 
     $scope.scan = function() {
       try {
+        $scope.result.trying = true;
         navigator.bluetooth.requestDevice({
           filters: [{
             //name: 'reelyActive'
@@ -16,7 +17,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           }]
         })
         .then(device => {
-          $scope.device.name = device.name;
+          $scope.result.name = device.name;
           return device.gatt.connect();
         })
         .then(server => {
@@ -29,7 +30,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return characteristic.readValue();
         })
         .then(value => {
-          $scope.device.value = value.getUint8(0);
+          $scope.result.value = value.getUint8(0);
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
