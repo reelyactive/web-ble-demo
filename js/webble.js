@@ -17,8 +17,9 @@ angular.module('webble', [ 'ui.bootstrap' ])
           }]
         })
         .then(device => {
-          $scope.result = { name: device.name, uuids: device.uuids };
-          return device.gatt.connect();
+          $scope.result = { id: device.id, name: device.name,
+                            uuids: device.uuids, connected: device.connected };
+          //return device.gatt.connect();
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
