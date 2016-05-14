@@ -12,14 +12,23 @@ angular.module('webble', [ 'ui.bootstrap' ])
         navigator.bluetooth.requestDevice({
           filters: [{
             //name: 'reelyActive'
-            //services: ['battery_service', 'heart_rate', 0xfed8, 0xfeed, 0xcbbfe0e1f7f3420684e084cbb3d09dfc]
-            services: [0x180a]
+            services: ['battery_service']
           }]
         })
         .then(device => {
-          $scope.device.name = device.name;
-          $scope.device.uuids = device.uuids;
           return device.gatt.connect();
+        })
+        .then(server => {
+          return server.getPrimaryService('battery_service');
+        })
+        .then(service => {
+          return service.getCharacteristic('battery_level');
+        })
+        .then(characteristic => {
+          return characteristic.readValue();
+        })
+        .then(value => {
+          device.value = value.getUint8(0);
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
