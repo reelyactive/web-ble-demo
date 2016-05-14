@@ -5,12 +5,14 @@ angular.module('webble', [ 'ui.bootstrap' ])
     $scope.device = JSON.stringify({}, null, ' ');
     $scope.compatibilityError = 'None';
     $scope.scanError = 'None';
+    $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
 
     $scope.scan = function() {
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
-            name: 'reelyActive'
+            //name: 'reelyActive'
+            services: [0xfed8, 0xfeed, 0xcbbfe0e1f7f3420684e084cbb3d09dfc]
           }]
         })
         .then(device => {
