@@ -12,7 +12,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
-            name: 'reelyActive' //nameFilter
+            name: $scope.nameFilter
           }]
         })
         .then(device => {
