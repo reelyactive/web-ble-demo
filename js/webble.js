@@ -2,12 +2,13 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
   // Interaction controller
   .controller('InteractionCtrl', function($scope, $interval) {
-    $scope.result = JSON.stringify({}, null, ' ');
+    $scope.result = {}; //JSON.stringify({}, null, ' ');
     $scope.compatibilityError = 'None';
     $scope.scanError = 'None';
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
 
     $scope.scan = function() {
+      $scope.result.scan = true;
       try {
         $scope.result.trying = true;
         navigator.bluetooth.requestDevice({
