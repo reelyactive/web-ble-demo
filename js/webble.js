@@ -16,6 +16,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           }]
         })
         .then(device => {
+          $scope.device.name = device.name;
           return device.gatt.connect();
         })
         .then(server => {
@@ -28,7 +29,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return characteristic.readValue();
         })
         .then(value => {
-          device.value = value.getUint8(0);
+          $scope.device.value = value.getUint8(0);
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
