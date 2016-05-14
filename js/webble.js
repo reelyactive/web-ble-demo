@@ -20,10 +20,10 @@ angular.module('webble', [ 'ui.bootstrap' ])
         .then(device => {
           $scope.result = { id: device.id, name: device.name,
                             uuids: device.uuids, connected: device.connected };
-          return device.watchAdvertisements();
-        })
-        .then(advertisement => {
-          $scope.advertisement = 'yes';
+          return device.watchAdvertisements()
+            .then(() => {
+              $scope.advertisement = 'yes';
+            })
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
