@@ -18,6 +18,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
         })
         .then(device => {
           $scope.result.device = device;
+          $scope.result.keys = Object.keys(device);
           $scope.result.name = device.name;
           $scope.result.uuids = device.uuids;
           return device.gatt.connect();
