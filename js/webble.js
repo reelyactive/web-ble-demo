@@ -8,12 +8,11 @@ angular.module('webble', [ 'ui.bootstrap' ])
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
 
     $scope.scan = function() {
-      $scope.result.scan = true;
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
             name: 'reelyActive',
-            optionalServices: [0x2a23]
+            optionalServices: [0x2a23, 0x7265656c794163746976652055554944]
           }]
         })
         .then(device => {
