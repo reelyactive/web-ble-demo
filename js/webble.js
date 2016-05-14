@@ -5,6 +5,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
     $scope.result = null;
     $scope.nameFilter = 'reelyActive';
     $scope.advertisement = 'no';
+    $scope.event = null;
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
     $scope.compatibilityError = null;
     $scope.scanError = null;
@@ -21,9 +22,12 @@ angular.module('webble', [ 'ui.bootstrap' ])
           $scope.result = { id: device.id, name: device.name,
                             uuids: device.uuids, connected: device.connected };
           return device.watchAdvertisements()
-            .then(() => {
+          .then(() => {
+            device.addEventListener('bluetoothadvertisingevent', function(event) {
               $scope.advertisement = 'yes';
+              $scope.event = event;
             })
+          });
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
