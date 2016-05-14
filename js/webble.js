@@ -12,8 +12,9 @@ angular.module('webble', [ 'ui.bootstrap' ])
         navigator.bluetooth.requestDevice({
           filters: [{
             //name: 'reelyActive'
-            services: [0xfed8, 0xfeed, 0xcbbfe0e1f7f3420684e084cbb3d09dfc]
+            //services: ['battery_service', 'heart_rate', 0xfed8, 0xfeed, 0xcbbfe0e1f7f3420684e084cbb3d09dfc]
           }]
+            services: [0xcbbfe0e1f7f3420684e084cbb3d09dfc]
         })
         .then(device => {
           $scope.device.name = device.name;
