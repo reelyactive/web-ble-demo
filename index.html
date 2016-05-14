@@ -61,8 +61,10 @@
               <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
             </alert>
             <pre ng-show="result">name:  {{result.name}} <br>id:    {{result.id}}<br>uuids: {{result.uuids}}<br>conn:  {{result.connected}}</pre>
-            <p> Advertisement? {{advertisement}} </p>
             <pre ng-show="event">{{event}}</pre>
+            <div class="well">
+              This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i>  The only functionality at this time is the ability to filter discovery by device name.  Future work will implement <a href="https://webbluetoothcg.github.io/web-bluetooth/#advertising-events" target="_blank">Responding to Advertising Events</a> to enable dynamic interaction with nearby objects.  Developers can refer to <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web?hl=en" target="_blank">Interact with BLE devices on the Web</a> for code examples.
+            </div>
           </div>
           <div class="col-md-3"></div>
         </div>

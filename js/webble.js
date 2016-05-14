@@ -4,7 +4,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
   .controller('InteractionCtrl', function($scope, $interval) {
     $scope.result = null;
     $scope.nameFilter = 'reelyActive';
-    $scope.advertisement = 'no';
     $scope.event = null;
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
     $scope.compatibilityError = null;
@@ -14,8 +13,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
       try {
         navigator.bluetooth.requestDevice({
           filters: [{
-            name: $scope.nameFilter,
-            optionalServices: [ 'battery_service' ]
+            name: $scope.nameFilter
           }]
         })
         .then(device => {
@@ -24,7 +22,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return device.watchAdvertisements()
           .then(() => {
             device.addEventListener('bluetoothadvertisingevent', function(event) {
-              $scope.advertisement = 'yes';
               $scope.event = event;
             })
           });
