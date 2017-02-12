@@ -12,6 +12,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
     $scope.scan = function() {
       try {
+        console.log('Giving it a try');
         navigator.bluetooth.requestDevice({
           acceptAllDevices: true,
           optionalServices: [ 0x2a23, 'battery_service' ]
@@ -19,9 +20,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
         .then(device => {
           console.log('Device: ' + device);
           device.addEventListener('gattserverdisconnected', onDisconnected);
-          $scope.$apply(function () {
-            $scope.device = device;
-          });
+          $scope.device = device;
           return device.gatt.connect();
         })
         .then(server => {
@@ -42,12 +41,14 @@ angular.module('webble', [ 'ui.bootstrap' ])
         .catch(error => { $scope.scanError = error.toString(); });
       }
       catch(err) {
+        console.log('Unable to give it a try');
         $scope.compatibilityError = err.toString();
       }
     }
 
     // Disconnection
     function onDisconnected(event) {
+      console.log('Event: Disconnected');
       $scope.event = event || 'Disconnected';
     }
 
