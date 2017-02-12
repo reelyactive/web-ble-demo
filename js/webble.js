@@ -3,7 +3,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
   // Interaction controller
   .controller('InteractionCtrl', function($scope, $interval) {
     $scope.result = null;
-    $scope.nameFilter = 'reelyActive';
     $scope.device = null;
     $scope.event = null;
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
@@ -52,4 +51,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
       $scope.event = event || 'Disconnected';
     }
 
+    // Periodically apply scope so variables update in browser
+    setInterval(function() { $scope.$apply(); }, 1000);
   });
