@@ -17,6 +17,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           optionalServices: [ 0x2a23, 'battery_service' ]
         })
         .then(device => {
+          console.log('Device: ' + device);
           device.addEventListener('gattserverdisconnected', onDisconnected);
           $scope.$apply(function () {
             $scope.device = device;
@@ -24,12 +25,15 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return device.gatt.connect();
         })
         .then(server => {
+          console.log('Connected');
           return server.getPrimaryService('battery_service');
         })
         .then(service => {
+          console.log('Got service');
           return service.getCharacteristic('battery_level');
         })
         .then(characteristic => {
+          console.log('Got characteristic');
           return characteristic.readValue();
         })
         .then(value => {
