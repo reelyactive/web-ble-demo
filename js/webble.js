@@ -12,23 +12,23 @@ angular.module('webble', [ 'ui.bootstrap' ])
       $scope.scanError = null; //   errors
 
       try {
+        var deviceInfo = {};
         console.log('Giving it a try');
         navigator.bluetooth.requestDevice({
           acceptAllDevices: true,
           optionalServices: [ 0x2a23, 'battery_service' ]
         })
         .then(device => {
-          var deviceInfo = {
-            name: device.name,
-            id: device.id,
-            allowedServices: device.allowedServices
-          };
+          deviceInfo.name = device.name;
+          deviceInfo.id = device.id,
           $scope.device = JSON.stringify(deviceInfo, null, 2);
           console.log('Device: ' + device);
           device.addEventListener('gattserverdisconnected', onDisconnected);
           return device.gatt.connect();
         })
         .then(server => {
+          deviceInfo.connected = device.gatt.connected;
+          $scope.device = JSON.stringify(deviceInfo, null, 2);
           console.log('Connected');
           return server.getPrimaryService('battery_service');
         })
