@@ -18,9 +18,14 @@ angular.module('webble', [ 'ui.bootstrap' ])
           optionalServices: [ 0x2a23, 'battery_service' ]
         })
         .then(device => {
+          var deviceInfo = {
+            name: device.name,
+            id: device.id,
+            allowedServices: device.allowedServices
+          };
+          $scope.device = JSON.stringify(deviceInfo, null, 2);
           console.log('Device: ' + device);
           device.addEventListener('gattserverdisconnected', onDisconnected);
-          $scope.device = { name: device.name, id: device.id };
           return device.gatt.connect();
         })
         .then(server => {
@@ -36,7 +41,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return characteristic.readValue();
         })
         .then(value => {
-          $scope.result = value.getUint8(0) || 'Received null value';
+          $scope.result = { byte: value.getUint8(0) };
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
