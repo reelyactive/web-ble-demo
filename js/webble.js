@@ -4,6 +4,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
   .controller('InteractionCtrl', function($scope, $interval) {
     $scope.result = null;
     $scope.nameFilter = 'reelyActive';
+    $scope.device = null;
     $scope.event = null;
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
     $scope.compatibilityError = null;
@@ -16,21 +17,32 @@ angular.module('webble', [ 'ui.bootstrap' ])
           optionalServices: [ 0x2a23 ]
         })
         .then(device => {
-          $scope.result = { id: device.id, name: device.name,
-                            uuids: device.uuids, connected: device.connected };
-          device.gatt.connect();
-          return device.watchAdvertisements()
-          .then(() => {
-            device.addEventListener('bluetoothadvertisingevent', function(event) {
-              $scope.event = event;
-            })
-          });
+          device.addEventListener('gattserverdisconnected', onDisconnected);
+          $scope.device = device;
+          return device.gatt.connect();
+        })
+        .then(server => {
+          return server.getPrimaryService(0x2a23);
+        })
+        .then(service => {
+          return service.getCharacteristic(0x2a23);
+        })
+        .then(characteristic => {
+          return characteristic.readValue();
+        })
+        .then(value => {
+          $scope.result = value;
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
       catch(err) {
         $scope.compatibilityError = err.toString();
       }
+    }
+
+    // Disconnection
+    function onDisconnected(event) {
+      $scope.event = event;
     }
 
   });
