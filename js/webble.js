@@ -20,7 +20,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           device.addEventListener('gattserverdisconnected', onDisconnected);
           $scope.$apply(function () {
             $scope.device = device;
-          }
+          });
           return device.gatt.connect();
         })
         .then(server => {
