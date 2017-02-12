@@ -14,7 +14,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
       try {
         navigator.bluetooth.requestDevice({
           acceptAllDevices: true,
-          optionalServices: [ 0x2a23 ]
+          optionalServices: [ 0x2a23, 'battery_service' ]
         })
         .then(device => {
           device.addEventListener('gattserverdisconnected', onDisconnected);
@@ -22,10 +22,10 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return device.gatt.connect();
         })
         .then(server => {
-          return server.getPrimaryService(0x2a23);
+          return server.getPrimaryService('battery_service');
         })
         .then(service => {
-          return service.getCharacteristic(0x2a23);
+          return service.getCharacteristic('battery_level');
         })
         .then(characteristic => {
           return characteristic.readValue();
