@@ -2,14 +2,15 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
   // Interaction controller
   .controller('InteractionCtrl', function($scope, $interval) {
-    $scope.result = null;
-    $scope.device = null;
-    $scope.event = null;
     $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
     $scope.compatibilityError = null;
-    $scope.scanError = null;
 
     $scope.scan = function() {
+      $scope.result = null;    // Clear any
+      $scope.device = null;    //   previous
+      $scope.event = null;     //   values or
+      $scope.scanError = null; //   errors
+
       try {
         console.log('Giving it a try');
         navigator.bluetooth.requestDevice({
@@ -19,7 +20,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
         .then(device => {
           console.log('Device: ' + device);
           device.addEventListener('gattserverdisconnected', onDisconnected);
-          $scope.device = device;
+          $scope.device = { name: device.name, id: device.id };
           return device.gatt.connect();
         })
         .then(server => {
@@ -35,7 +36,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return characteristic.readValue();
         })
         .then(value => {
-          $scope.result = value || 'Received null value';
+          $scope.result = value.getUint8(0) || 'Received null value';
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
@@ -51,6 +52,6 @@ angular.module('webble', [ 'ui.bootstrap' ])
       $scope.event = event || 'Disconnected';
     }
 
-    // Periodically apply scope so variables update in browser
+    // Hack to periodically apply scope so variables update in browser
     setInterval(function() { $scope.$apply(); }, 1000);
   });
