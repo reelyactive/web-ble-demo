@@ -18,7 +18,9 @@ angular.module('webble', [ 'ui.bootstrap' ])
         })
         .then(device => {
           device.addEventListener('gattserverdisconnected', onDisconnected);
-          $scope.device = device;
+          $scope.$apply(function () {
+            $scope.device = device;
+          }
           return device.gatt.connect();
         })
         .then(server => {
@@ -31,7 +33,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
           return characteristic.readValue();
         })
         .then(value => {
-          $scope.result = value;
+          $scope.result = value || 'Received null value';
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
@@ -42,7 +44,7 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
     // Disconnection
     function onDisconnected(event) {
-      $scope.event = event;
+      $scope.event = event || 'Disconnected';
     }
 
   });
