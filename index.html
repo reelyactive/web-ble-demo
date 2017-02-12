@@ -3,10 +3,10 @@
   <head>
     <title> reelyActive Web BLE Demo </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style/main.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript" src="js/webble.js"></script>
   </head>
   <body ng-app="webble">
@@ -21,7 +21,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://context.reelyactive.com">
+          <a class="navbar-brand" href="http://www.reelyactive.com">
             <strong>reely</strong>Active
           </a>
         </div>
@@ -41,33 +41,26 @@
               <b>HEADS UP</b> Are you sure you're using the Chrome browser?
             </alert>
             <p>&nbsp;</p>
-            <form class="form-inline text-center">
-              <div class="form-group">
-                <label for="filterName">Filter by name</label>
-                <select class="form-control" ng-model="nameFilter"
-                        id="filterName"/>
-                  <option value="reelyActive">reelyActive</option>
-                  <option value="Charge HR">Charge HR</option>
-                  <option value="MI">MI</option>
-                  <option value="Kontakt">Kontakt</option>
-                  <option value="estimote">estimote</option>
-                </select>
-              </div>
-             <button class="btn btn-success" ng-click="scan()">Scan</button>
-            </form>
+            <p class="text-center">
+              <i>Open your console (Ctrl-Shift-J) and click:</i>
+            </p>
+            <p class="text-center">
+              <button class="btn btn-success" ng-click="scan()">Scan</button>
+            </p>
             <p>&nbsp;</p>
             <alert ng-show="compatibilityError" type="danger"
                    class="text-center">
               <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
             </alert>
-            <h3> Device </h3>
+            <h3 ng-show="device"> Device </h3>
             <pre ng-show="device">{{device}}</pre>
-            <h3> Result </h3>
+            <h3 ng-show="result"> Result </h3>
             <pre ng-show="result">{{result}}</pre>
-            <h3> Event </h3>
+            <h3 ng-show="event"> Event </h3>
             <pre ng-show="event">{{event}}</pre>
             <div class="well">
-              This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i>  The only functionality at this time is the ability to filter discovery by device name.  Future work will implement <a href="https://webbluetoothcg.github.io/web-bluetooth/#advertising-events" target="_blank">Responding to Advertising Events</a> to enable dynamic interaction with nearby objects.  Developers can refer to <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web?hl=en" target="_blank">Interact with BLE devices on the Web</a> for code examples.
+              <p>This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i>  We're still waiting for <tt>navigator.bluetooth.requestLEScan()</tt> to be implemented as we have no use for pairing with devices...</p>
+              <p>Latest practical info about Web Bluetooth tends to be <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web?hl=en" target="_blank">here</a>, or dig into <a href="https://webbluetoothcg.github.io/web-bluetooth/" target="_blank">the draft spec</a>.</p>
             </div>
           </div>
           <div class="col-md-3"></div>
@@ -76,10 +69,10 @@
       <footer class="footer">
         <a href="https://github.com/reelyactive/web-ble-demo"> web-ble-demo </a>
         &nbsp; | &nbsp;
-        <a href="http://context.reelyactive.com"
-           tooltip="We believe in an open Internet of Things"
+        <a href="http://www.reelyactive.com"
+           uib-tooltip="We believe in an open Internet of Things"
            tooltip-placement="right">
-          &copy; reelyActive 2016
+          &copy; reelyActive 2016-2017
         </a>
       </footer>
     </div>
