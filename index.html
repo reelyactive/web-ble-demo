@@ -37,9 +37,9 @@
           <div class="col-md-6">
             <h1 class="text-center"> Web Bluetooth Demo </h1>
             <h2 class="text-center"><small><u>PREREQUISITES</u>: Chrome browser with <a href="chrome://flags/#enable-web-bluetooth" target="_blank">Web Bluetooth Enabled</a></small></h2>
-            <alert ng-hide="isChrome" type="info" class="text-center">
+            <div uib-alert ng-hide="isChrome" class="alert-info text-center">
               <b>HEADS UP</b> Are you sure you're using the Chrome browser?
-            </alert>
+            </div>
             <p>&nbsp;</p>
             <p class="text-center">
               <i>Open your console (Ctrl-Shift-J) and click:</i>
@@ -48,10 +48,10 @@
               <button class="btn btn-success" ng-click="scan()">Scan</button>
             </p>
             <p>&nbsp;</p>
-            <alert ng-show="compatibilityError" type="danger"
-                   class="text-center">
+            <div uib-alert ng-show="compatibilityError"
+                 class="alert-danger text-center">
               <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
-            </alert>
+            </div>
             <h3 ng-show="device"> Device </h3>
             <pre ng-show="device">{{device}}</pre>
             <h3 ng-show="result"> Result </h3>
