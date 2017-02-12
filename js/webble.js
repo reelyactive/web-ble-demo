@@ -12,9 +12,8 @@ angular.module('webble', [ 'ui.bootstrap' ])
     $scope.scan = function() {
       try {
         navigator.bluetooth.requestDevice({
-          filters: [{
-            name: $scope.nameFilter
-          }]
+          acceptAllDevices: true,
+          optionalServices: [ 0x2a23 ]
         })
         .then(device => {
           $scope.result = { id: device.id, name: device.name,
