@@ -42,9 +42,6 @@
             </div>
             <p>&nbsp;</p>
             <p class="text-center">
-              <i>Open your console (Ctrl-Shift-J) and click:</i>
-            </p>
-            <p class="text-center">
               <button class="btn btn-success" ng-click="scan()">Scan</button>
             </p>
             <p>&nbsp;</p>
@@ -52,7 +49,8 @@
                  class="alert-danger text-center">
               <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
             </div>
-            <h3 ng-show="device"> Device </h3>
+            <h3 ng-show="device"> Selected Device Info <br>
+              <small>Yes, sadly this is all Web Bluetooth currently provides</small> </h3>
             <pre ng-show="device">{{device}}</pre>
             <h3 ng-show="result"> Result </h3>
             <pre ng-show="result">{{result}}</pre>

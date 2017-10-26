@@ -13,48 +13,23 @@ angular.module('webble', [ 'ui.bootstrap' ])
 
       try {
         var deviceInfo = {};
-        console.log('Giving it a try');
+        console.log('Starting to request BLE devices');
         navigator.bluetooth.requestDevice({
-          acceptAllDevices: true,
-          optionalServices: [ 0x2a23, 'battery_service' ]
+          acceptAllDevices: true
         })
         .then(device => {
           deviceInfo.name = device.name;
           deviceInfo.id = device.id,
           $scope.device = JSON.stringify(deviceInfo, null, 2);
-          console.log('Device: ' + device);
-          device.addEventListener('gattserverdisconnected', onDisconnected);
-          return device.gatt.connect();
-        })
-        .then(server => {
-          deviceInfo.connected = device.gatt.connected;
-          $scope.device = JSON.stringify(deviceInfo, null, 2);
-          console.log('Connected');
-          return server.getPrimaryService('battery_service');
-        })
-        .then(service => {
-          console.log('Got service');
-          return service.getCharacteristic('battery_level');
-        })
-        .then(characteristic => {
-          console.log('Got characteristic');
-          return characteristic.readValue();
-        })
-        .then(value => {
-          $scope.result = { byte: value.getUint8(0) };
+          console.log('User paired with device name:', device.name,
+                      'id:', device.id);
         })
         .catch(error => { $scope.scanError = error.toString(); });
       }
       catch(err) {
-        console.log('Unable to give it a try');
+        console.log('Unable to request BLE devices');
         $scope.compatibilityError = err.toString();
       }
-    }
-
-    // Disconnection
-    function onDisconnected(event) {
-      console.log('Event: Disconnected');
-      $scope.event = event || 'Disconnected';
     }
 
     // Hack to periodically apply scope so variables update in browser
