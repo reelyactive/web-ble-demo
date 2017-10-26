@@ -4,7 +4,7 @@ web-ble-demo
 Step 1: Enable Web Bluetooth in Chrome
 --------------------------------------
 
-Browse to [chrome://flags/#enable-web-bluetooth](chrome://flags/#enable-web-bluetooth) and select Enable, if permitted.
+Enter __chrome://flags/#enable-experimental-web-platform-features__ in the Chrome browser and select Enable, if permitted.
 
 
 Step 2: Load the web demo over HTTPS
@@ -24,7 +24,7 @@ Fortunately, the [What's Next](https://developers.google.com/web/updates/2015/07
 Something cool for the interim...
 ---------------------------------
 
-Check out [chrome://bluetooth-internals#devices](chrome://bluetooth-internals#devices) if you're running the Chrome browser.  Imagine having access to all that info from a webpage!
+Enter __chrome://bluetooth-internals#devices__ in the Chrome browser.  Imagine having access to all that info from a webpage!
 
 
 More info
