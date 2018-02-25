@@ -42,12 +42,18 @@
             </div>
             <p>&nbsp;</p>
             <p class="text-center">
-              <button class="btn btn-success" ng-click="scan()">Scan</button>
+              <button class="btn btn-primary"
+                      ng-click="requestDevice()"> requestDevice() </button>
+              &nbsp;
+              <button class="btn btn-warning"
+                      ng-click="requestScan()"> requestLEScan() </button>
             </p>
             <p>&nbsp;</p>
             <div uib-alert ng-show="compatibilityError"
                  class="alert-danger text-center">
               <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
+              <br><br>
+              <pre> {{compatibilityError}} </pre>
             </div>
             <h3 ng-show="device"> Selected Device Info <br>
               <small>Yes, sadly this is all Web Bluetooth currently provides</small> </h3>
@@ -56,8 +62,17 @@
             <pre ng-show="result">{{result}}</pre>
             <h3 ng-show="event"> Event </h3>
             <pre ng-show="event">{{event}}</pre>
+            <h3 ng-show="scanCompleted"> Scan Results <br>
+              <small>If you're seeing this, then requestLEScan() finally works!</small> </h3>
+            <table ng-show="scanCompleted" class="table">
+              <tr ng-repeat="device in devices">
+                <td> <pre> {{device}} </pre> </td>
+              </tr>
+            </table>
             <div class="well">
-              <p>This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i>  We're still waiting for <tt>navigator.bluetooth.requestLEScan()</tt> to be implemented as we have no use for pairing with devices...</p>
+              <p>This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i> </p>
+              <p> The <a href="https://webbluetoothcg.github.io/web-bluetooth/#introduction-examples" target="_blank" class="text-primary"><tt>navigator.bluetooth.requestDevice()</tt></a> functionality is mature but is intended for <b>connection with a specific device.</b> </p>
+              <p> The <a href="https://webbluetoothcg.github.io/web-bluetooth/scanning.html#introduction-examples" target="_blank" class="text-warning"><tt>navigator.bluetooth.requestLEScan()</tt></a> functionality is <u>pending implementation</u> and is intended for <b>observation of all relevant devices in range</b> &mdash; that which interests us at <a href="https://www.reelyactive.com" target="_blank">reelyActive</a>. &nbsp; <i>Sadly,  requestLEScan() will fail until it is implemented by your web browser.</i> </p>
               <p>Latest practical info about Web Bluetooth tends to be <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web?hl=en" target="_blank">here</a>, or dig into <a href="https://webbluetoothcg.github.io/web-bluetooth/" target="_blank">the draft spec</a>.</p>
             </div>
           </div>
@@ -67,10 +82,10 @@
       <footer class="footer">
         <a href="https://github.com/reelyactive/web-ble-demo"> web-ble-demo </a>
         &nbsp; | &nbsp;
-        <a href="http://www.reelyactive.com"
+        <a href="https://www.reelyactive.com"
            uib-tooltip="We believe in an open Internet of Things"
            tooltip-placement="right">
-          &copy; reelyActive 2016-2017
+          &copy; reelyActive 2016-2018
         </a>
       </footer>
     </div>
