@@ -1,71 +1,44 @@
 /**
- * Copyright reelyActive 2017-2018
+ * Copyright reelyActive 2017-2020
  * We believe in an open Internet of Things
  */
 
-angular.module('webble', [ 'ui.bootstrap' ])
 
-  // Interaction controller
-  .controller('InteractionCtrl', function($scope, $interval) {
-    $scope.isChrome = !!window.chrome && !!window.chrome.webstore;
-    $scope.compatibilityError = null;
-    $scope.scanCompleted = false;
-    $scope.devices = [];
+// Constant definitions
+const SCAN_OPTIONS = {
+    acceptAllAdvertisements: true,
+    keepRepeatedDevices: true
+};
 
-    // This is the best we can currently do: requestDevice()
-    $scope.requestDevice = function() {
-      $scope.result = null;    // Clear any
-      $scope.device = null;    //   previous
-      $scope.event = null;     //   values or
-      $scope.scanError = null; //   errors
-      $scope.compatibilityError = null;
 
-      try {
-        var deviceInfo = {};
-        console.log('Starting to request BLE devices');
-        navigator.bluetooth.requestDevice({
-          acceptAllDevices: true
-        })
-        .then(device => {
-          deviceInfo.name = device.name;
-          deviceInfo.id = device.id,
-          $scope.device = JSON.stringify(deviceInfo, null, 2);
-          console.log('User paired with device name:', device.name,
-                      'id:', device.id);
-        })
-        .catch(error => { $scope.scanError = error.toString(); });
-      }
-      catch(err) {
-        console.log('Unable to complete requestDevice()');
-        $scope.compatibilityError = err.toString();
-      }
+// DOM elements
+let eventJson = document.querySelector('#eventJson');
+
+
+// Attempt to run the experimental requestLEScan function
+async function scanForAdvertisements() {
+  try {
+    const scan = await navigator.bluetooth.requestLEScan(SCAN_OPTIONS);
+    let numberOfEvents = 0;
+
+    navigator.bluetooth.addEventListener('advertisementreceived', event => {
+      eventJson.textContent = JSON.stringify(event, null, 2);
+      numberOfEvents++;
+    });
+
+    function stopScan() {
+      scan.stop();
+      console.log('Scan stopped.', numberOfEvents, 'events detected.');
+      stopButton.removeEventListener('click', stopScan);
     }
 
-    // This is how we want it to work: requestLEScan()
-    $scope.requestScan = function() {
-      $scope.scanError = null;          // Clear any previous
-      $scope.compatibilityError = null; //   errors
+    stopButton.addEventListener('click', stopScan);
+  }
+  catch(error)  {
+    console.log('Scan unsuccessful:', error);
+  }
+}
 
-      try {
-        navigator.bluetooth.requestLEScan({
-          filters: [],
-          options: { keepRepeatedDevices: true, acceptAllAdvertisements: true }
-        })
-        .then(() => {
-          $scope.scanCompleted = true;
-          navigator.bluetooth.addEventListener('advertisementreceived', event => {
-            let device = event;
-            $scope.devices.push(device);
-          });
-        })
-        .catch(error => { $scope.scanError = error.toString(); });
-      }
-      catch(err) {
-        console.log('Unable to complete requestLEScan()');
-        $scope.compatibilityError = err.toString();
-      }      
-    }
 
-    // Hack to periodically apply scope so variables update in browser
-    setInterval(function() { $scope.$apply(); }, 1000);
-  });
+// Handle scan button click
+scanButton.addEventListener('click', scanForAdvertisements);

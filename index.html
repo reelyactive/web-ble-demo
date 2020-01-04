@@ -1,93 +1,144 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="Web app demonstrating how nearby Bluetooth Low Energy devices that are advertising can be discovered from within a web browser, without the need for a native app!">
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/reelyactive.css">
     <title> reelyActive Web BLE Demo </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style/main.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="js/webble.js"></script>
+    <!----- Structured, linked metadata (JSON-LD & Schema.org) ----->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org", 
+      "@type": "WebApplication",
+      "name": "reelyActive Web BLE Demo",
+      "description": "Web app demonstrating how nearby Bluetooth Low Energy devices that are advertising can be discovered from within a web browser, without the need for a native app!",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "applicationCategory": "Client-side",
+      "browserRequirements": "Requires a browser that supports Web Bluetooth and the experimental scanning feature."
+      "image": "https://reelyactive.github.io/web-ble-demo/images/header.png",
+      "author": {
+        "@type": "Organization",
+        "url": "https://www.reelyactive.com"
+      }
+    }
+    </script>
   </head>
-  <body ng-app="webble">
-    <div ng-controller="InteractionCtrl">
-      <nav class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle"
-                  ng-init="navCollapsed = true"
-                  ng-click="navCollapsed = !navCollapsed">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="http://www.reelyactive.com">
-            <strong>reely</strong>Active
-          </a>
-        </div>
-        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'"
-             ng-click="navCollapsed = true">
-          <ul class="nav navbar-nav navbar-right">
-          </ul>
-        </div>
-      </nav>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <h1 class="text-center"> Web Bluetooth Demo </h1>
-            <h2 class="text-center"><small><u>PREREQUISITES</u>: Chrome browser with <a href="chrome://flags/#enable-experimental-web-platform-features" target="_blank">Web Bluetooth Enabled</a></small></h2>
-            <div uib-alert ng-hide="isChrome" class="alert-info text-center">
-              <b>HEADS UP</b> Are you sure you're using the Chrome browser?
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-reelyactive bg-reelyactive">
+      <a class="navbar-brand" href="https://www.reelyactive.com/">
+        <img src="images/reelyactive-logo-nav.png" width="165" height="30"
+             alt="reelyActive">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarItems" aria-controls="navbarItems"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarItems">
+        <!-- Left-aligned navigation items -->
+        <ul class="navbar-nav mr-auto"></ul>
+        <!-- Right-aligned navigation items -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <!-- Link to home -->
+            <a class="nav-link"
+               href="https://reelyactive.github.io/web-ble-demo/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown"
+               role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">
+              <i class="fas fa-question-circle"></i>
+            </a>
+            <!-- Info about tracking and open source software/licenses -->
+            <div class="dropdown-menu dropdown-menu-right"
+                 aria-labelledby="navbarDropdown">
+              <a class="dropdown-item"
+                 href="https://www.reelyactive.com/how-we-observe/#digital">
+                <i class="fas fa-mouse-pointer"></i>
+                Behaviour tracking free &nbsp;
+                <span class="badge badge-success">
+                  <i class="fas fa-user-shield"></i>
+                </span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" target="_blank"
+                 href="https://getbootstrap.com" >
+                <i class="fab fa-bootstrap"></i>
+                Bootstrap 4 &nbsp;
+                <span class="badge badge-light">
+                  <i class="fab fa-osi"></i> MIT
+                </span>
+              </a>
+              <a class="dropdown-item" target="_blank"
+                 href="https://fontawesome.com" >
+                <i class="fab fa-font-awesome"></i>
+                Font Awesome (Free) &nbsp;
+                <span class="badge badge-light">
+                  <i class="fab fa-creative-commons"></i>
+                  <i class="fab fa-osi"></i> MIT
+                </span>
+              </a>
+              <a class="dropdown-item" target="_blank"
+                 href="https://jquery.com" >
+                <i class="fab fa-js"></i>
+                JQuery &nbsp;
+                <span class="badge badge-light">
+                  <i class="fab fa-osi"></i> MIT
+                </span>
+              </a>
+              <a class="dropdown-item" target="_blank"
+                 href="https://github.com/reelyactive/web-style-guide/" >
+                <i class="fas fa-code"></i>
+                Web Style Guide &nbsp;
+                <span class="badge badge-light">
+                  <i class="fab fa-osi"></i> MIT
+                </span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" target="_blank"
+                 href="https://www.reelyactive.com/made-in-montreal/" >
+                <i class="fab fa-canadian-maple-leaf"></i>
+                Made in Montr&eacute;al &nbsp;
+                <i class="fas fa-city"></i>
+              </a>
             </div>
-            <p>&nbsp;</p>
-            <p class="text-center">
-              <button class="btn btn-primary"
-                      ng-click="requestDevice()"> requestDevice() </button>
-              &nbsp;
-              <button class="btn btn-warning"
-                      ng-click="requestScan()"> requestLEScan() </button>
-            </p>
-            <p>&nbsp;</p>
-            <div uib-alert ng-show="compatibilityError"
-                 class="alert-danger text-center">
-              <b>FAILED</b> Are you sure Web Bluetooth is supported and enabled?
-              <br><br>
-              <pre> {{compatibilityError}} </pre>
-            </div>
-            <h3 ng-show="device"> Selected Device Info <br>
-              <small>Yes, sadly this is all Web Bluetooth currently provides</small> </h3>
-            <pre ng-show="device">{{device}}</pre>
-            <h3 ng-show="result"> Result </h3>
-            <pre ng-show="result">{{result}}</pre>
-            <h3 ng-show="event"> Event </h3>
-            <pre ng-show="event">{{event}}</pre>
-            <h3 ng-show="scanCompleted"> Scan Results <br>
-              <small>If you're seeing this, then requestLEScan() finally works!</small> </h3>
-            <table ng-show="scanCompleted" class="table">
-              <tr ng-repeat="device in devices">
-                <td> <pre> {{device}} </pre> </td>
-              </tr>
-            </table>
-            <div class="well">
-              <p>This example shows how various Bluetooth devices can be discovered from within a web browser <i>with no app required!</i> </p>
-              <p> The <a href="https://webbluetoothcg.github.io/web-bluetooth/#introduction-examples" target="_blank" class="text-primary"><tt>navigator.bluetooth.requestDevice()</tt></a> functionality is mature but is intended for <b>connection with a specific device.</b> </p>
-              <p> The <a href="https://webbluetoothcg.github.io/web-bluetooth/scanning.html#introduction-examples" target="_blank" class="text-warning"><tt>navigator.bluetooth.requestLEScan()</tt></a> functionality is <u>pending implementation</u> and is intended for <b>observation of all relevant devices in range</b> &mdash; that which interests us at <a href="https://www.reelyactive.com" target="_blank">reelyActive</a>. &nbsp; <i>Sadly,  requestLEScan() will fail until it is implemented by your web browser.</i> </p>
-              <p>Latest practical info about Web Bluetooth tends to be <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web?hl=en" target="_blank">here</a>, or dig into <a href="https://webbluetoothcg.github.io/web-bluetooth/" target="_blank">the draft spec</a>.</p>
-            </div>
-          </div>
-          <div class="col-md-3"></div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Content -->
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+          <h1 class="mt-4"> reelyActive Web BLE Demo </h1>
+          <p class="lead"> Scan for nearby advertising Bluetooth devices from the web browser </p>
+          <button type="button" class="btn btn-primary mb-2"
+                  id="scanButton"> Scan </button>
+          <button type="button" class="btn btn-info mb-2"
+                  id="stopButton"> Stop </button>
+          <pre id="eventJson" class="my-4"></pre>
         </div>
       </div>
-      <footer class="footer">
-        <a href="https://github.com/reelyactive/web-ble-demo"> web-ble-demo </a>
-        &nbsp; | &nbsp;
-        <a href="https://www.reelyactive.com"
-           uib-tooltip="We believe in an open Internet of Things"
-           tooltip-placement="right">
-          &copy; reelyActive 2016-2018
-        </a>
-      </footer>
     </div>
+    <footer class="footer">
+      <a href="https://github.com/reelyactive/web-ble-demo"> web-ble-demo </a>
+      &nbsp; | &nbsp;
+      <a href="https://www.reelyactive.com"> &copy; reelyActive 2016-2020 </a>
+    </footer>
+    <script defer src="js/solid.min.js"></script>
+    <script defer src="js/brands.min.js"></script>
+    <script defer src="js/fontawesome.min.js"></script>
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/webble.js"></script>
   </body>
 </html>
