@@ -13,6 +13,7 @@ const SCAN_OPTIONS = {
 
 // DOM elements
 let eventJson = document.querySelector('#eventJson');
+let scanStatus = document.querySelector('#scanStatus');
 
 
 // Attempt to run the experimental requestLEScan function
@@ -21,6 +22,8 @@ async function scanForAdvertisements() {
     const scan = await navigator.bluetooth.requestLEScan(SCAN_OPTIONS);
     let numberOfEvents = 0;
 
+    scanStatus.textContent = 'Scan started: active = ' + scan.active;
+
     navigator.bluetooth.addEventListener('advertisementreceived', event => {
       eventJson.textContent = JSON.stringify(event, null, 2);
       numberOfEvents++;
@@ -28,14 +31,15 @@ async function scanForAdvertisements() {
 
     function stopScan() {
       scan.stop();
-      console.log('Scan stopped.', numberOfEvents, 'events detected.');
+      scanStatus.textContent = 'Scan stopped.  ' + numberOfEvents +
+                               ' events detected.';
       stopButton.removeEventListener('click', stopScan);
     }
 
     stopButton.addEventListener('click', stopScan);
   }
   catch(error)  {
-    console.log('Scan unsuccessful:', error);
+    scanStatus.textContent = 'Scan unsuccessful: ' + error;
   }
 }
 
