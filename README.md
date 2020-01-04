@@ -1,6 +1,9 @@
 web-ble-demo
 ============
 
+As of the release of Google Chrome 79 in late 2019, [the experimental Web Bluetooth Scanning feature is finally available](https://www.chromestatus.com/feature/5346724402954240)!
+
+
 Step 1: Enable Web Bluetooth in Chrome
 --------------------------------------
 
@@ -13,18 +16,10 @@ Step 2: Load the web demo over HTTPS
 [Click here](https://reelyactive.github.io/web-ble-demo/) to load the web demo over HTTPS, and then press the Scan button.
 
 
-Impressed?
-----------
+Chrome has an internal scanning test feature
+--------------------------------------------
 
-You shouldn't be.  Sadly the current implementation of Web Bluetooth does not include __navigator.bluetooth.requestLEScan()__ which would provide access to all the pertinent identifiers of nearbly devices.  At present, all that is exposed are the device _name_ and an _id_ with no relevance to the device metadata.
-
-Fortunately, the [What's Next](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web#whats_next) from Google suggests that __navigator.bluetooth.requestLEScan()__ will be available in the near future.  Check back here for awesomeness when that is _finally_ availaBLE.
-
-
-Something cool for the interim...
----------------------------------
-
-Enter __chrome://bluetooth-internals#devices__ in the Chrome browser.  Imagine having access to all that info from a webpage!
+Enter __chrome://bluetooth-internals#devices__ in the Chrome browser to confirm that your browser/platform is able to scan for advertising BLE devices.
 
 
 More info
@@ -38,7 +33,7 @@ License
 
 MIT License
 
-Copyright (c) 2016-2017 reelyActive
+Copyright (c) 2016-2020 reelyActive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
