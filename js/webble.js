@@ -33,8 +33,9 @@ async function scanForAdvertisements() {
     scanStatus.textContent = 'Scan started: active = ' + scan.active;
 
     navigator.bluetooth.addEventListener('advertisementreceived', event => {
-      devices[base64toHex(event.device.id)] = { rssi: event.rssi };
-      eventJson.textContent = JSON.stringify(event, null, 2);
+      let deviceId = base64toHex(event.device.id);
+      devices[deviceId] = { rssi: event.rssi };
+      eventJson.textContent = deviceId + ' @ ' + event.rssi + 'dBm';
       numberOfEvents++;
     });
 
