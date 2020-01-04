@@ -33,7 +33,7 @@ async function scanForAdvertisements() {
     scanStatus.textContent = 'Scan started: active = ' + scan.active;
 
     navigator.bluetooth.addEventListener('advertisementreceived', event => {
-      devices[atob(event.device.id)] = { rssi: event.rssi };
+      devices[base64toHex(event.device.id)] = { rssi: event.rssi };
       eventJson.textContent = JSON.stringify(event, null, 2);
       numberOfEvents++;
     });
@@ -51,6 +51,20 @@ async function scanForAdvertisements() {
   catch(error)  {
     scanStatus.textContent = 'Scan unsuccessful: ' + error;
   }
+}
+
+
+// Convert base64 to hexadecimal
+function base64toHex(encodedValue) {
+  let decodedValue = atob(encodedValue);
+  let hexString = '';
+
+  for(let cChar = 0; cChar < decodedValue.length; cChar++ ) {
+    let hex = '0'+ decodedValue.charCodeAt(cChar).toString(16);
+    hexString += hex.slice(-2);
+  }
+
+  return hexString;
 }
 
 
