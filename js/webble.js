@@ -40,9 +40,11 @@ async function scanForAdvertisements() {
 
     function stopScan() {
       scan.stop();
+      let numberOfDevices = Object.keys(devices).length;
       eventJson.textContent = JSON.stringify(devices, null, 2);
       scanStatus.textContent = 'Scan stopped.  ' + numberOfEvents +
-                               ' events detected.';
+                               ' events detected from ' + numberOfDevices +
+                               ' unique devices.';
       stopButton.removeEventListener('click', stopScan);
     }
 
