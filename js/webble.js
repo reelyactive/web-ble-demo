@@ -14,6 +14,7 @@ const SCAN_OPTIONS = {
 // DOM elements
 let eventJson = document.querySelector('#eventJson');
 let scanStatus = document.querySelector('#scanStatus');
+let devicestbody = document.querySelector('#devicestbody');
 
 
 // Other variables
@@ -54,6 +55,105 @@ async function scanForAdvertisements() {
   catch(error)  {
     scanStatus.textContent = 'Scan unsuccessful: ' + error;
   }
+}
+
+
+// Handle a scan event
+function handleScanEvent(event) {
+  let deviceId = base64toHex(event.device.id);
+  let tr = document.getElementById(deviceId);
+  if(tr) {
+    updateDevice(event, tr);
+  }
+  else {
+    insertDevice(deviceId, event, true);
+  }
+  sortDevicesAndHighlight(deviceId);
+}
+
+
+// Insert a device into the DOM as a <tr>
+function insertDevice(deviceId, event, prepend) {
+  let tr = document.createElement('tr');
+  tr.setAttribute('id', deviceId);
+  tr.setAttribute('class', 'monospace');
+
+  appendTd(tr, deviceId, 'text-right');
+  appendTd(tr, event.rssi, 'text-right');
+  appendTd(tr, '1', 'text-center');
+  appendTd(tr, new Date().toLocaleTimeString(), 'text-center');
+
+  devicestbody.prepend(tr);
+}
+
+
+// Update an existing device in the DOM
+function updateDevice(event, tr) {
+  let tds = tr.getElementsByTagName('td');
+  updateNode(tds[1], event.rssi);
+  updateNode(tds[2], '1');
+  updateNode(tds[3], new Date().toLocaleTimeString());
+}
+
+
+// Append a <td> with the given content to the given <tr>
+function appendTd(tr, content, classNames) {
+  let td = document.createElement('td');
+  updateNode(td, content);
+  tr.appendChild(td);
+  if(classNames) {
+    td.setAttribute('class', classNames);
+  }
+}
+
+
+// Update the given node with the given content
+function updateNode(node, content, append) {
+  append = append || false;
+
+  while(!append && node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+
+  if(content instanceof Element) {
+    node.appendChild(content);
+  }
+  else if(content instanceof Array) {
+    content.forEach(function(element) {
+      node.appendChild(element);
+    });
+  }
+  else {
+    node.textContent = content;
+  }
+}
+
+
+// Sort the devices in the table, highlighting the given deviceId
+function sortDevicesAndHighlight(deviceId) {
+  let trs = Array.from(devicestbody.getElementsByTagName('tr'));
+  let sortedFragment = document.createDocumentFragment();
+  let sortFunction = function(tr1, tr2) {
+    if(parseInt(tr1.getElementsByTagName('td')[1].textContent) >
+       parseInt(tr2.getElementsByTagName('td')[1].textContent)) {
+      return -1;
+    };
+    return 1;
+  };
+
+  trs.sort(sortFunction);
+
+  trs.forEach(function(tr) {
+    if(tr.id === deviceId) {
+      tr.setAttribute('class', 'monospace animated-highlight-reelyactive');
+    }
+    else {
+      tr.setAttribute('class', 'monospace');
+    }
+    sortedFragment.appendChild(tr);
+  });
+
+  devicestbody.appendChild(sortedFragment);
 }
 
 
