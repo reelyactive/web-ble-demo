@@ -132,11 +132,12 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-          <table class="table table-hover my-4" id="devices">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6 my-4">
+          <table class="table table-sm table-hover" id="devices">
+            <caption> List of detected devices in decreasing order of signal strength </caption>
             <thead class="thead-reelyactive">
               <tr class="text-center">
-                <th> <i class="fas fa-barcode"></i> transmitterId </th>
+                <th> <i class="fas fa-barcode"></i> transmitterId * </th>
                 <th> <i class="fas fa-signal"></i> rssi </th>
                 <th> <i class="fas fa-info-circle"></i> dec </th>
                 <th> <i class="fas fa-clock"></i> timestamp </th>
@@ -145,6 +146,7 @@
             <tbody id="devicestbody">
             </tbody>
           </table>
+          <p><small class="text-muted"> * the transmitterID is not the 48-bit Bluetooth advertiser address but rather a <a href="https://webbluetoothcg.github.io/web-bluetooth/#bluetooth-device-identifiers" target="_blank">128-bit Identity Resolving Key</a>. </small></p>
         </div>
       </div>
     </div>
