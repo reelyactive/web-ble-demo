@@ -16,13 +16,8 @@ let scanStatus = document.querySelector('#scanStatus');
 let devicestbody = document.querySelector('#devicestbody');
 
 
-// Other variables
-let devices = {};
-
-
 // Attempt to run the experimental requestLEScan function
 async function scanForAdvertisements() {
-  devices = {};
   scanStatus.textContent = 'Initiating scan';
 
   try {
@@ -32,18 +27,14 @@ async function scanForAdvertisements() {
     scanStatus.textContent = 'Scan started: active = ' + scan.active;
 
     navigator.bluetooth.addEventListener('advertisementreceived', event => {
-      let deviceId = base64toHex(event.device.id);
-      devices[deviceId] = { rssi: event.rssi };
       handleScanEvent(event);
       numberOfEvents++;
     });
 
     function stopScan() {
       scan.stop();
-      let numberOfDevices = Object.keys(devices).length;
       scanStatus.textContent = 'Scan stopped.  ' + numberOfEvents +
-                               ' events detected from ' + numberOfDevices +
-                               ' unique devices.';
+                               ' events detected.';
       stopButton.removeEventListener('click', stopScan);
     }
 
@@ -75,9 +66,10 @@ function insertDevice(deviceId, event, prepend) {
   tr.setAttribute('id', deviceId);
   tr.setAttribute('class', 'monospace');
 
-  appendTd(tr, deviceId, 'text-right');
+  let compactDeviceId = deviceId.split(0,4) + '\u2026' + deviceId.split(-4);
+  appendTd(tr, compactDeviceId, 'text-right');
   appendTd(tr, event.rssi, 'text-right');
-  appendTd(tr, '1', 'text-center');
+  appendTd(tr, 1, 'text-center');
   appendTd(tr, new Date().toLocaleTimeString(), 'text-center');
 
   devicestbody.prepend(tr);
@@ -88,7 +80,7 @@ function insertDevice(deviceId, event, prepend) {
 function updateDevice(event, tr) {
   let tds = tr.getElementsByTagName('td');
   updateNode(tds[1], event.rssi);
-  updateNode(tds[2], '1');
+  updateNode(tds[2], parseInt(tds[2].textContent)++);
   updateNode(tds[3], new Date().toLocaleTimeString());
 }
 
