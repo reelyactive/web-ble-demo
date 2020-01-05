@@ -14,7 +14,7 @@ const SCAN_OPTIONS = {
 // DOM elements
 let scanButton = document.querySelector('#scanButton');
 let stopButton = document.querySelector('#stopButton');
-let scanStatus = document.querySelector('#scanStatus');
+let scanAlert = document.querySelector('#scanAlert');
 let devicestbody = document.querySelector('#devicestbody');
 
 
@@ -28,9 +28,6 @@ async function scanForAdvertisements() {
     scanButton.setAttribute('disabled', true);
     stopButton.setAttribute('class', 'btn btn-primary');
     stopButton.removeAttribute('disabled');
-    scanStatus.textContent = 'Initiating scan';
-
-    scanStatus.textContent = 'Scan started: active = ' + scan.active;
 
     navigator.bluetooth.addEventListener('advertisementreceived', event => {
       handleScanEvent(event);
@@ -38,9 +35,11 @@ async function scanForAdvertisements() {
     });
 
     function stopScan() {
+      let stopTime = new Date().toLocaleTimeString();
       scan.stop();
-      scanStatus.textContent = 'Scan stopped.  ' + numberOfEvents +
-                               ' events detected.';
+      scanAlert.textContent = 'Scan stopped at ' + stopTime + ' with ' +
+                              numberOfEvents + ' events detected.';
+      scanAlert.removeAttribute('hidden');
       scanButton.textContent = 'Scan';
       scanButton.setAttribute('class', 'btn btn-primary mb-2');
       scanButton.removeAttribute('disabled');
@@ -52,7 +51,8 @@ async function scanForAdvertisements() {
     stopButton.addEventListener('click', stopScan);
   }
   catch(error)  {
-    scanStatus.textContent = 'Scan unsuccessful: ' + error;
+    scanAlert.textContent = 'Scan unsuccessful: ' + error;
+    scanAlert.removeAttribute('hidden');
   }
 }
 

@@ -121,18 +121,19 @@
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
           <h1 class="mt-4"> reelyActive Web BLE Demo </h1>
           <p class="lead"> Scan for nearby advertising Bluetooth devices from the web browser </p>
-          <p class="text-center my-2">
+          <p class="text-center my-4">
             <button type="button" class="btn btn-primary"
                     id="scanButton"> Scan </button>
             <button type="button" class="btn btn-outline-dark"
                     id="stopButton" disabled> Stop </button>
           </p>
-          <pre id="scanStatus" class="my-4"></pre>
+          <div class="alert alert-dark" role="alert" id="scanAlert" hidden>
+          </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-          <table class="table table-hover" id="devices">
+          <table class="table table-hover my-4" id="devices">
             <thead class="thead-reelyactive">
               <tr class="text-center">
                 <th> <i class="fas fa-barcode"></i> transmitterId </th>
