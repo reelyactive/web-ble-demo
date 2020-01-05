@@ -66,7 +66,7 @@ function insertDevice(deviceId, event, prepend) {
   tr.setAttribute('id', deviceId);
   tr.setAttribute('class', 'monospace');
 
-  let compactDeviceId = deviceId.split(0,4) + '\u2026' + deviceId.split(-4);
+  let compactDeviceId = deviceId.slice(0,4) + '\u2026' + deviceId.slice(-4);
   appendTd(tr, compactDeviceId, 'text-right');
   appendTd(tr, event.rssi, 'text-right');
   appendTd(tr, 1, 'text-center');
@@ -80,7 +80,7 @@ function insertDevice(deviceId, event, prepend) {
 function updateDevice(event, tr) {
   let tds = tr.getElementsByTagName('td');
   updateNode(tds[1], event.rssi);
-  updateNode(tds[2], parseInt(tds[2].textContent)++);
+  updateNode(tds[2], parseInt(tds[2].textContent) + 1);
   updateNode(tds[3], new Date().toLocaleTimeString());
 }
 
