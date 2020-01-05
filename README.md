@@ -4,6 +4,9 @@ web-ble-demo
 As of the release of Google Chrome 79 in late 2019, [the experimental Web Bluetooth Scanning feature is finally available](https://www.chromestatus.com/feature/5346724402954240)!
 
 
+![reelyActive Web BLE Demo header](https://reelyactive.github.io/web-ble-demo/images/header.jpg)
+
+
 Step 1: Enable Web Bluetooth in Chrome
 --------------------------------------
 
