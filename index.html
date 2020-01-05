@@ -120,7 +120,7 @@
       <div class="row justify-content-center">
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
           <h1 class="mt-4"> reelyActive Web BLE Demo </h1>
-          <p class="lead"> Scan for nearby advertising Bluetooth devices from the web browser </p>
+          <p class="lead"> Scan for nearby advertising <i class="fab fa-bluetooth"></i> Bluetooth devices from the web browser </p>
           <p class="text-center my-4">
             <button type="button" class="btn btn-primary"
                     id="scanButton"> Scan </button>
@@ -147,6 +147,47 @@
             </tbody>
           </table>
           <p><small class="text-muted"> * the transmitterID is not the 48-bit Bluetooth advertiser address but rather a <a href="https://webbluetoothcg.github.io/web-bluetooth/#bluetooth-device-identifiers" target="_blank">128-bit Identity Resolving Key</a>. </small></p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6 my-4">
+          <h2> Prerequisites </h2>
+          <p class="lead"> Web Bluetooth Scanning is an experimental feature </p>
+          <p> The Web Bluetooth Scanning feature demonstrated here is available only in <em>specific</em> browsers under <em>specific</em> conditions, as to be expected given that: </p>
+          <blockquote class="blockquote mb-4">
+            <p class="mb-0"> [Web Bluetooth Scanning] is not a W3C Standard nor is it on the W3C Standards Track </p>
+            <footer class="blockquote-footer">04 11 19 &nbsp; <cite title="Web Bluetooth Scanning Draft Community Group Report"> Draft Community Group Report </cite> &nbsp; <a href="https://webbluetoothcg.github.io/web-bluetooth/scanning.html" target="_blank"><i class="fas fa-external-link-alt"></i></a></footer>
+          </blockquote>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="chrometab" data-toggle="tab"
+                 href="#chromecontent" role="tab" aria-controls="chromecontent"
+                 aria-selected="true"> <i class="fab fa-chrome"></i> Chrome </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="otherstab" data-toggle="tab"
+                 href="#otherscontent" role="tab" aria-controls="otherscontent"
+                 aria-selected="false"> Other Browsers </a>
+            </li>
+          </ul>
+          <div class="tab-content tab-content-reelyactive">
+            <div class="tab-pane fade show active" id="chromecontent"
+                 role="tabpanel" aria-labelledby="chrometab">
+              <p> <i class="fab fa-chrome"></i> Chrome/Chromium version 79+ supports Web Bluetooth Scanning on <i class="fab fa-android"></i> Android and <i class="fas fa-laptop"></i> desktop.  Check your version by browsing to: </p>
+              <p class="monospace"> chrome://version </p>
+              <p> The <em>Experimental Web Platform features</em> flag must be enabled for Web Bluetooth support.  Enable this feature by browsing to: </p>
+              <p class="monospace"> chrome://flags/#enable-experimental-web-platform-features </p>
+              <img src="images/chrome-flags-web-bluetooth.png" class="img-fluid mx-auto d-block mb-2">
+              <p> Under this configuration, Web Bluetooth Scanning may nonetheless not function due to OS or hardware constraints.  Verify the Bluetooth adapter status by browsing to: </p>
+              <p class="monospace"> chrome://bluetooth-internals/#adapter </p>
+            </div>
+            <div class="tab-pane fade" id="otherscontent" role="tabpanel"
+                 aria-labelledby="otherstab">
+              <p> <i class="fab fa-chrome"></i> Chrome/Chromium is the only browser successfully tested to date.  See the Web Bluetooth Community Group <a href="https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md" target="_blank">Implementation Status</a> for updates. </p>
+              <p> On the <i class="fab fa-opera"></i> Opera browser, if the functionality becomes available, it will likely be behind a flag: </p>
+              <p class="monospace"> opera://flags/#enable-web-bluetooth </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
