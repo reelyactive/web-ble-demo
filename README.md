@@ -10,13 +10,15 @@ As of the release of Google Chrome 79 in late 2019, [the experimental Web Blueto
 Step 1: Enable Web Bluetooth in Chrome
 --------------------------------------
 
-Enter __chrome://flags/#enable-experimental-web-platform-features__ in the Chrome browser and select Enable, if permitted.
+Enter __chrome://flags/#enable-experimental-web-platform-features__ in the Chrome browser and select Enable, if permitted.  We also have a tutorial [here](https://reelyactive.github.io/pareto-anywhere/enable-web-bluetooth-scanning/).
 
 
 Step 2: Load the web demo over HTTPS
 ------------------------------------
 
-[Click here](https://reelyactive.github.io/web-ble-demo/) to load the web demo over HTTPS, and then press the Scan button.
+Browse to [reelyactive.github.io/web-ble-demo/](https://reelyactive.github.io/web-ble-demo/) to load the web demo over HTTPS, and then press the Scan button.
+
+Alternatively, browse to [reelyactive.github.io/pareto-anywhere/](https://reelyactive.github.io/pareto-anywhere/) for the web app version of [Pareto Anywhere](https://getpareto.com) which is made possible by the Web Bluetooth Scanning feature.
 
 
 Chrome has an internal scanning test feature
