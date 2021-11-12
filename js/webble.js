@@ -18,12 +18,25 @@ let scanAlert = document.querySelector('#scanAlert');
 let devicestbody = document.querySelector('#devicestbody');
 
 
+// Check if the radio is available
+navigator.bluetooth.getAvailability().then(isAvailable => {
+  if(isAvailable) {
+    scanButton.removeAttribute('disabled');
+  }
+  else {
+    scanAlert.textContent = 'Bluetooth radio is not available.';
+    scanAlert.removeAttribute('hidden');
+  }
+});
+
+
 // Attempt to run the experimental requestLEScan function
 function scanForAdvertisements() {
   try {
     let numberOfEvents = 0;
     scanAlert.textContent = 'Called navigator.bluetooth.requestLEScan(), waiting for scan to begin...';
     scanAlert.removeAttribute('hidden');
+setInterval(function() { console.log(navigator.bluetooth); }, 1000);
 
     navigator.bluetooth.requestLEScan(SCAN_OPTIONS).then(() => {
       scanAlert.setAttribute('hidden');
