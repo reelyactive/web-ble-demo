@@ -1,5 +1,5 @@
 /**
- * Copyright reelyActive 2017-2020
+ * Copyright reelyActive 2017-2021
  * We believe in an open Internet of Things
  */
 
@@ -19,19 +19,24 @@ let devicestbody = document.querySelector('#devicestbody');
 
 
 // Attempt to run the experimental requestLEScan function
-async function scanForAdvertisements() {
+function scanForAdvertisements() {
   try {
-    const scan = await navigator.bluetooth.requestLEScan(SCAN_OPTIONS);
     let numberOfEvents = 0;
-    scanButton.textContent = 'Scanning...';
-    scanButton.setAttribute('class', 'btn btn-outline-dark');
-    scanButton.setAttribute('disabled', true);
-    stopButton.setAttribute('class', 'btn btn-primary');
-    stopButton.removeAttribute('disabled');
+    scanAlert.textContent = 'Called navigator.bluetooth.requestLEScan(), waiting for scan to begin...';
+    scanAlert.removeAttribute('hidden');
 
-    navigator.bluetooth.addEventListener('advertisementreceived', event => {
-      handleScanEvent(event);
-      numberOfEvents++;
+    navigator.bluetooth.requestLEScan(SCAN_OPTIONS).then(() => {
+      scanAlert.setAttribute('hidden');
+      scanButton.textContent = 'Scanning...';
+      scanButton.setAttribute('class', 'btn btn-outline-dark');
+      scanButton.setAttribute('disabled', true);
+      stopButton.setAttribute('class', 'btn btn-primary');
+      stopButton.removeAttribute('disabled');
+
+      navigator.bluetooth.addEventListener('advertisementreceived', event => {
+        handleScanEvent(event);
+        numberOfEvents++;
+      });
     });
 
     function stopScan() {
